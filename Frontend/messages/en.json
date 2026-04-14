@@ -1,0 +1,147 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "error": "Something went wrong",
+    "retry": "Try again",
+    "close": "Close",
+    "save": "Save",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "back": "Back",
+    "seeAll": "See all",
+    "addToCart": "Add to cart",
+    "buyNow": "Buy now",
+    "outOfStock": "Out of stock",
+    "freeShipping": "Free shipping",
+    "delivery": "3-5 business days",
+    "deliveryDays": "3-5 business days"
+  },
+  "nav": {
+    "home": "Home",
+    "products": "Products",
+    "cart": "Cart",
+    "account": "My account",
+    "tracking": "Track order",
+    "search": "Search products...",
+    "categories": {
+      "pets": "Pets",
+      "home": "Home",
+      "tech": "Technology",
+      "beauty": "Beauty",
+      "fitness": "Fitness"
+    }
+  },
+  "home": {
+    "hero": {
+      "badge": "🚀 Free shipping across Colombia",
+      "title": "Everything you need,",
+      "titleAccent": "in one place.",
+      "subtitle": "Quality products with fast delivery. Electronics, home, pets, fitness and more.",
+      "cta": "Shop now",
+      "ctaSecondary": "Browse catalog",
+      "socialProof": "+2,000 happy customers",
+      "rating": "4.9 / 5"
+    },
+    "features": {
+      "shipping": { "title": "Free shipping", "desc": "Across Colombia" },
+      "secure": { "title": "Secure checkout", "desc": "SSL encrypted payments" },
+      "guarantee": { "title": "30-day guarantee", "desc": "No questions asked" },
+      "support": { "title": "24/7 support", "desc": "Via WhatsApp" }
+    },
+    "featured": "Featured products",
+    "categories": "Categories",
+    "newArrivals": "New arrivals"
+  },
+  "product": {
+    "price": "Price",
+    "description": "Description",
+    "benefits": "Benefits",
+    "gallery": "Gallery",
+    "quantity": "Quantity",
+    "inStock": "In stock",
+    "outOfStock": "Out of stock",
+    "discount": "discount",
+    "share": "Share",
+    "addedToCart": "Added to cart"
+  },
+  "cart": {
+    "title": "Your cart",
+    "empty": "Your cart is empty",
+    "emptyDesc": "Add products to get started",
+    "subtotal": "Subtotal",
+    "shipping": "Shipping",
+    "shippingFree": "Free",
+    "total": "Total",
+    "checkout": "Go to checkout",
+    "continueShopping": "Continue shopping",
+    "remove": "Remove",
+    "freeShipping": "Free shipping",
+    "items": "items",
+    "item": "item"
+  },
+  "checkout": {
+    "title": "Checkout",
+    "personalInfo": "Personal information",
+    "shippingInfo": "Shipping address",
+    "paymentMethod": "Payment method",
+    "orderSummary": "Order summary",
+    "placeOrder": "Place order",
+    "processing": "Processing...",
+    "cod": "Cash on delivery",
+    "codDesc": "Pay when you receive your order",
+    "mercadopago": "MercadoPago",
+    "mercadopagoDesc": "Card, PSE, Nequi",
+    "wompi": "Wompi",
+    "wompiDesc": "Credit or debit card"
+  },
+  "tracking": {
+    "title": "Track my order",
+    "subtitle": "Enter your order code to see the status",
+    "placeholder": "E.g.: NOVA-20260413-0001",
+    "search": "Search order",
+    "notFound": "Order not found",
+    "steps": {
+      "received": "Order received",
+      "confirmed": "Payment confirmed",
+      "shipped": "On the way",
+      "delivered": "Delivered"
+    },
+    "status": {
+      "RECEIVED": "Order received",
+      "CONFIRMED": "Payment confirmed",
+      "SHIPPED": "On the way",
+      "DELIVERED": "Delivered"
+    }
+  },
+  "auth": {
+    "login": "Log in",
+    "register": "Create account",
+    "email": "Email address",
+    "password": "Password",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "phone": "Phone (optional)",
+    "loginCta": "Log in",
+    "registerCta": "Create account",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?",
+    "forgotPassword": "Forgot your password?",
+    "logout": "Log out"
+  },
+  "account": {
+    "title": "My account",
+    "orders": "My orders",
+    "addresses": "My addresses",
+    "wishlist": "Wishlist",
+    "profile": "Profile"
+  },
+  "errors": {
+    "required": "This field is required",
+    "invalidEmail": "Invalid email address",
+    "minPassword": "Minimum 8 characters",
+    "minLength": "Minimum {min} characters",
+    "serverError": "Server error. Please try again.",
+    "notFound": "Not found",
+    "networkError": "Connection error"
+  }
+}

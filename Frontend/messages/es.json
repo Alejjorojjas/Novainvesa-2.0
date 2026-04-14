@@ -1,0 +1,147 @@
+{
+  "common": {
+    "loading": "Cargando...",
+    "error": "Algo salió mal",
+    "retry": "Intentar de nuevo",
+    "close": "Cerrar",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "confirm": "Confirmar",
+    "back": "Volver",
+    "seeAll": "Ver todos",
+    "addToCart": "Agregar al carrito",
+    "buyNow": "Comprar ahora",
+    "outOfStock": "Agotado",
+    "freeShipping": "Envío gratis",
+    "delivery": "3-5 días hábiles",
+    "deliveryDays": "3-5 días hábiles"
+  },
+  "nav": {
+    "home": "Inicio",
+    "products": "Productos",
+    "cart": "Carrito",
+    "account": "Mi cuenta",
+    "tracking": "Rastrear pedido",
+    "search": "Buscar productos...",
+    "categories": {
+      "pets": "Mascotas",
+      "home": "Hogar",
+      "tech": "Tecnología",
+      "beauty": "Belleza",
+      "fitness": "Fitness"
+    }
+  },
+  "home": {
+    "hero": {
+      "badge": "🚀 Envíos gratis a toda Colombia",
+      "title": "Todo lo que necesitas,",
+      "titleAccent": "en un solo lugar.",
+      "subtitle": "Productos de calidad con entrega rápida. Electrónica, hogar, mascotas, fitness y más.",
+      "cta": "Comprar ahora",
+      "ctaSecondary": "Ver catálogo",
+      "socialProof": "+2,000 clientes felices",
+      "rating": "4.9 / 5"
+    },
+    "features": {
+      "shipping": { "title": "Envío gratis", "desc": "A toda Colombia" },
+      "secure": { "title": "Compra segura", "desc": "Pagos cifrados SSL" },
+      "guarantee": { "title": "Garantía 30 días", "desc": "Sin preguntas" },
+      "support": { "title": "Soporte 24/7", "desc": "Por WhatsApp" }
+    },
+    "featured": "Productos destacados",
+    "categories": "Categorías",
+    "newArrivals": "Novedades"
+  },
+  "product": {
+    "price": "Precio",
+    "description": "Descripción",
+    "benefits": "Beneficios",
+    "gallery": "Galería",
+    "quantity": "Cantidad",
+    "inStock": "En stock",
+    "outOfStock": "Agotado",
+    "discount": "descuento",
+    "share": "Compartir",
+    "addedToCart": "Agregado al carrito"
+  },
+  "cart": {
+    "title": "Tu carrito",
+    "empty": "Tu carrito está vacío",
+    "emptyDesc": "Agrega productos para comenzar",
+    "subtotal": "Subtotal",
+    "shipping": "Envío",
+    "shippingFree": "Gratis",
+    "total": "Total",
+    "checkout": "Ir al checkout",
+    "continueShopping": "Seguir comprando",
+    "remove": "Eliminar",
+    "freeShipping": "Envío gratis",
+    "items": "items",
+    "item": "item"
+  },
+  "checkout": {
+    "title": "Finalizar compra",
+    "personalInfo": "Información personal",
+    "shippingInfo": "Dirección de envío",
+    "paymentMethod": "Método de pago",
+    "orderSummary": "Resumen del pedido",
+    "placeOrder": "Realizar pedido",
+    "processing": "Procesando...",
+    "cod": "Pago contraentrega",
+    "codDesc": "Paga cuando recibas tu pedido",
+    "mercadopago": "MercadoPago",
+    "mercadopagoDesc": "Tarjeta, PSE, Nequi",
+    "wompi": "Wompi",
+    "wompiDesc": "Tarjeta de crédito o débito"
+  },
+  "tracking": {
+    "title": "Rastrear mi pedido",
+    "subtitle": "Ingresa tu código de pedido para ver el estado",
+    "placeholder": "Ej: NOVA-20260413-0001",
+    "search": "Buscar pedido",
+    "notFound": "Pedido no encontrado",
+    "steps": {
+      "received": "Pedido recibido",
+      "confirmed": "Pago confirmado",
+      "shipped": "En camino",
+      "delivered": "Entregado"
+    },
+    "status": {
+      "RECEIVED": "Pedido recibido",
+      "CONFIRMED": "Pago confirmado",
+      "SHIPPED": "En camino",
+      "DELIVERED": "Entregado"
+    }
+  },
+  "auth": {
+    "login": "Iniciar sesión",
+    "register": "Crear cuenta",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "firstName": "Nombre",
+    "lastName": "Apellido",
+    "phone": "Teléfono (opcional)",
+    "loginCta": "Iniciar sesión",
+    "registerCta": "Crear cuenta",
+    "noAccount": "¿No tienes cuenta?",
+    "hasAccount": "¿Ya tienes cuenta?",
+    "forgotPassword": "¿Olvidaste tu contraseña?",
+    "logout": "Cerrar sesión"
+  },
+  "account": {
+    "title": "Mi cuenta",
+    "orders": "Mis pedidos",
+    "addresses": "Mis direcciones",
+    "wishlist": "Lista de deseos",
+    "profile": "Perfil"
+  },
+  "errors": {
+    "required": "Este campo es obligatorio",
+    "invalidEmail": "Correo electrónico inválido",
+    "minPassword": "Mínimo 8 caracteres",
+    "minLength": "Mínimo {min} caracteres",
+    "serverError": "Error del servidor. Intenta de nuevo.",
+    "notFound": "No encontrado",
+    "networkError": "Error de conexión"
+  }
+}
