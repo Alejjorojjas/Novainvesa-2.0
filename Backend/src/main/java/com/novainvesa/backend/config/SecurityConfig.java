@@ -1,5 +1,6 @@
 package com.novainvesa.backend.config;
 
+import com.novainvesa.backend.security.JwtAuthFilter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,6 +12,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -24,6 +26,12 @@ public class SecurityConfig {
     @Value("${app.cors.allowed-origin}")
     private String allowedOrigin;
 
+    private final JwtAuthFilter jwtAuthFilter;
+
+    public SecurityConfig(JwtAuthFilter jwtAuthFilter) {
+        this.jwtAuthFilter = jwtAuthFilter;
+    }
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
@@ -33,21 +41,23 @@ public class SecurityConfig {
             // CORS configurado con el bean corsConfigurationSource()
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
 
-            // Sin estado de sesión — JWT en cada request (filtro JWT se agrega en siguiente PR)
+            // Sin estado de sesión — JWT en cada request
             .sessionManagement(session ->
                 session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
             .authorizeHttpRequests(auth -> auth
                 // Health check: público para Render.com
                 .requestMatchers(HttpMethod.GET, "/api/health").permitAll()
-                // TODO: agregar aquí los endpoints públicos cuando se implemente auth:
-                //   .requestMatchers("/api/v1/auth/**").permitAll()
-                //   .requestMatchers(HttpMethod.GET, "/api/v1/products/**").permitAll()
-                //   .requestMatchers(HttpMethod.GET, "/api/v1/categories").permitAll()
-                //   etc.
-                // Por ahora, todo lo demás requiere autenticación (JWT se agrega en feat/backend/autenticacion-jwt)
+                // Autenticación: rutas públicas
+                .requestMatchers(HttpMethod.POST, "/api/v1/auth/register").permitAll()
+                .requestMatchers(HttpMethod.POST, "/api/v1/auth/login").permitAll()
+                .requestMatchers(HttpMethod.POST, "/api/v1/admin/auth/login").permitAll()
+                // Todo lo demás requiere autenticación JWT
                 .anyRequest().authenticated()
-            );
+            )
+
+            // Registrar el filtro JWT antes del filtro de autenticación estándar
+            .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
