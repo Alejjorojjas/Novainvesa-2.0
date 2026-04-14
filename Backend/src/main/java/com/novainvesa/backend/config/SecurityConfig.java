@@ -69,6 +69,8 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.POST, "/api/v1/payments/**").permitAll()
                 // Webhooks: llamados por proveedores externos, HMAC verifica la autenticidad
                 .requestMatchers(HttpMethod.POST, "/api/v1/webhooks/**").permitAll()
+                // Meta Conversions API: publico (llamado desde el browser del cliente)
+                .requestMatchers(HttpMethod.POST, "/api/v1/pixel/**").permitAll()
                 // Todo lo demás requiere autenticación JWT
                 .anyRequest().authenticated()
             )

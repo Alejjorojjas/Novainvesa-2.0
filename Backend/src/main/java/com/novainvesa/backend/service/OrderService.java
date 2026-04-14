@@ -40,6 +40,7 @@ public class OrderService {
     private final ProductStatsService productStatsService;
     private final UserRepository userRepository;
     private final N8nService n8nService;
+    private final NotificationService notificationService;
 
     // ─── Creación de pedido ───────────────────────────────────────────────────
 
@@ -132,6 +133,8 @@ public class OrderService {
             orderRepository.save(order);
             // N8nService.sendOrderToN8n está anotado con @Async → ejecuta en thread pool
             n8nService.sendOrderToN8n(order);
+            // RN-030/RN-031: notificar confirmacion de pedido COD (ambos @Async)
+            notificationService.notifyOrderConfirmation(order);
         }
 
         log.info("Pedido {} creado — método: {}, total: {}", orderCode, request.getPaymentMethod(), total);

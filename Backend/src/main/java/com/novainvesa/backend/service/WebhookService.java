@@ -37,6 +37,7 @@ public class WebhookService {
 
     private final OrderRepository orderRepository;
     private final N8nService n8nService;
+    private final NotificationService notificationService;
     private final ObjectMapper objectMapper;
 
     // ─── MercadoPago ─────────────────────────────────────────────────────────
@@ -186,10 +187,13 @@ public class WebhookService {
         }
 
         orderRepository.save(order);
-        log.info("Pedido {} confirmado vía {} — disparando N8n", orderCode, provider);
+        log.info("Pedido {} confirmado via {} — disparando N8n", orderCode, provider);
 
         // RN-022: enviar a Dropi solo después de confirmar el pago
         n8nService.sendOrderToN8n(order);
+
+        // RN-030/RN-031: notificar confirmacion de pago (ambos @Async)
+        notificationService.notifyOrderConfirmation(order);
     }
 
     // ─── Verificación de firmas HMAC ──────────────────────────────────────────

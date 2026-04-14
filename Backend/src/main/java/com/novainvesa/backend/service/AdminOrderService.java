@@ -35,6 +35,7 @@ public class AdminOrderService {
 
     private final OrderRepository orderRepository;
     private final OrderItemRepository orderItemRepository;
+    private final NotificationService notificationService;
 
     /**
      * Transiciones de estado permitidas según RN-042.
@@ -131,7 +132,15 @@ public class AdminOrderService {
         }
 
         log.info("Pedido {} actualizado de {} a {} por admin", id, currentStatus, newStatus);
-        return toAdminResponse(orderRepository.save(order), true);
+        Order saved = orderRepository.save(order);
+
+        // RN-032: notificar envio con numero de guia (ambos @Async)
+        if (newStatus == Order.OrderStatus.SHIPPED) {
+            String trackingNumber = request.getNotes() != null ? request.getNotes() : "—";
+            notificationService.notifyOrderShipped(saved, trackingNumber, "Coordinadora");
+        }
+
+        return toAdminResponse(saved, true);
     }
 
     // ─── Mapeo ─────────────────────────────────────────────────────────────
