@@ -99,6 +99,11 @@ public class Product {
     @Column(name = "imported_at")
     private LocalDateTime importedAt;
 
+    /** Contador de vistas acumuladas (sincronizado con product_stats.views) */
+    @Column(name = "view_count", nullable = false)
+    @Builder.Default
+    private Long viewCount = 0L;
+
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
