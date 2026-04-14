@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.stream.Collectors;
+import com.novainvesa.backend.exception.OrderException;
+import com.novainvesa.backend.exception.PaymentException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -33,6 +35,27 @@ public class GlobalExceptionHandler {
         return ResponseEntity
                 .status(ex.getStatus())
                 .body(ApiResponse.error(ex.getCode(), ex.getMessage()));
+    }
+
+    /** Errores de pedidos (400 o 404 según código) */
+    @ExceptionHandler(OrderException.class)
+    public ResponseEntity<ApiResponse<?>> handleOrderException(OrderException ex) {
+        log.warn("Error en pedido [{}]: {}", ex.getCode(), ex.getMessage());
+        HttpStatus status = "ORDER_006".equals(ex.getCode()) ? HttpStatus.NOT_FOUND : HttpStatus.BAD_REQUEST;
+        return ResponseEntity.status(status).body(ApiResponse.error(ex.getCode(), ex.getMessage()));
+    }
+
+    /** Errores de pagos (400 o 401 según código) */
+    @ExceptionHandler(PaymentException.class)
+    public ResponseEntity<ApiResponse<?>> handlePaymentException(PaymentException ex) {
+        // No loggear detalles de PAYMENT_002 para no revelar información del sistema de firma
+        if ("PAYMENT_002".equals(ex.getCode())) {
+            log.warn("Webhook recibido con firma inválida");
+        } else {
+            log.warn("Error de pago [{}]: {}", ex.getCode(), ex.getMessage());
+        }
+        HttpStatus status = "PAYMENT_002".equals(ex.getCode()) ? HttpStatus.UNAUTHORIZED : HttpStatus.BAD_REQUEST;
+        return ResponseEntity.status(status).body(ApiResponse.error(ex.getCode(), ex.getMessage()));
     }
 
     /** Errores de validación de @Valid */

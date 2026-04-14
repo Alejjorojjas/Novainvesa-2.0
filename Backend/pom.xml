@@ -72,6 +72,13 @@
 			<scope>test</scope>
 		</dependency>
 
+		<!-- MercadoPago SDK -->
+		<dependency>
+			<groupId>com.mercadopago</groupId>
+			<artifactId>sdk-java</artifactId>
+			<version>2.1.7</version>
+		</dependency>
+
 		<!-- JJWT — JSON Web Tokens -->
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>

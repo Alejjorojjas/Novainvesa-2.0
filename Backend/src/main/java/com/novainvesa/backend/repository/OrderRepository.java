@@ -22,4 +22,7 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     /** Cuenta pedidos del día para generar el código secuencial diario */
     @Query("SELECT COUNT(o) FROM Order o WHERE o.createdAt >= :startOfDay AND o.createdAt < :endOfDay")
     long countOrdersForDay(LocalDateTime startOfDay, LocalDateTime endOfDay);
+
+    /** Búsqueda por ID de pago MercadoPago (para webhooks) */
+    java.util.Optional<Order> findByMpPaymentId(String mpPaymentId);
 }

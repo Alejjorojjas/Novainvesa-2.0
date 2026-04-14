@@ -58,6 +58,13 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/api/v1/categories/**").permitAll()
                 // Cobertura COD: público
                 .requestMatchers(HttpMethod.GET, "/api/v1/coverage/**").permitAll()
+                // Pedidos: creación pública (guest + autenticado), consulta pública
+                .requestMatchers(HttpMethod.POST, "/api/v1/orders").permitAll()
+                .requestMatchers(HttpMethod.GET,  "/api/v1/orders/**").permitAll()
+                // Pagos: creación pública (el pedido ya valida la existencia)
+                .requestMatchers(HttpMethod.POST, "/api/v1/payments/**").permitAll()
+                // Webhooks: llamados por proveedores externos, HMAC verifica la autenticidad
+                .requestMatchers(HttpMethod.POST, "/api/v1/webhooks/**").permitAll()
                 // Todo lo demás requiere autenticación JWT
                 .anyRequest().authenticated()
             )
