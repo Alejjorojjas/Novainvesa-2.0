@@ -21,6 +21,7 @@ import java.util.List;
 
 @Configuration
 @EnableWebSecurity
+@org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity
 public class SecurityConfig {
 
     @Value("${app.cors.allowed-origin}")
@@ -48,10 +49,13 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 // Health check: público para Render.com
                 .requestMatchers(HttpMethod.GET, "/api/health").permitAll()
-                // Autenticación: rutas públicas
+                // Autenticación de usuarios: rutas públicas
                 .requestMatchers(HttpMethod.POST, "/api/v1/auth/register").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/v1/auth/login").permitAll()
+                // Admin auth: solo el login es público — el orden importa (va ANTES de la regla general admin)
                 .requestMatchers(HttpMethod.POST, "/api/v1/admin/auth/login").permitAll()
+                // Admin: todas las demás rutas requieren rol ADMIN o SUPER_ADMIN
+                .requestMatchers("/api/v1/admin/**").hasAnyRole("ADMIN", "SUPER_ADMIN")
                 // Productos: listado, búsqueda y detalle son públicos
                 .requestMatchers(HttpMethod.GET, "/api/v1/products/**").permitAll()
                 // Categorías: listado público

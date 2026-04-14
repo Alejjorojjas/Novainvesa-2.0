@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.stream.Collectors;
+import com.novainvesa.backend.exception.ImportException;
 import com.novainvesa.backend.exception.OrderException;
 import com.novainvesa.backend.exception.PaymentException;
 
@@ -55,6 +56,18 @@ public class GlobalExceptionHandler {
             log.warn("Error de pago [{}]: {}", ex.getCode(), ex.getMessage());
         }
         HttpStatus status = "PAYMENT_002".equals(ex.getCode()) ? HttpStatus.UNAUTHORIZED : HttpStatus.BAD_REQUEST;
+        return ResponseEntity.status(status).body(ApiResponse.error(ex.getCode(), ex.getMessage()));
+    }
+
+    /** Errores del importador Dropi */
+    @ExceptionHandler(ImportException.class)
+    public ResponseEntity<ApiResponse<?>> handleImportException(ImportException ex) {
+        log.warn("Error de importación [{}]: {}", ex.getCode(), ex.getMessage());
+        // IMPORT_003 (no encontrado en Dropi) e IMPORT_005 (job no encontrado) → 404
+        HttpStatus status = switch (ex.getCode()) {
+            case "IMPORT_003", "IMPORT_005" -> HttpStatus.NOT_FOUND;
+            default -> HttpStatus.BAD_REQUEST;
+        };
         return ResponseEntity.status(status).body(ApiResponse.error(ex.getCode(), ex.getMessage()));
     }
 

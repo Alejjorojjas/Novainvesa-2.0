@@ -54,4 +54,12 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     @Modifying
     @Query("UPDATE Product p SET p.viewCount = p.viewCount + 1 WHERE p.id = :id")
     void incrementViewCount(@Param("id") Long id);
+
+    // ─── Admin: verificar slug único para importación ──────────────────────
+
+    boolean existsBySlug(String slug);
+
+    // ─── Admin: listado por estado (incluye todos los estados) ───────────
+
+    Page<Product> findByStatus(Product.Status status, Pageable pageable);
 }
