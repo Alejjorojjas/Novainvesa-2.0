@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useCallback, use } from 'react'
+import { useState, useEffect, useCallback, use, Suspense } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { SlidersHorizontal, X, ChevronLeft, ChevronRight, ArrowUpDown } from 'lucide-react'
 import api, { extractData } from '@/lib/api'
@@ -38,8 +38,7 @@ interface Props {
   params: Promise<{ locale: string }>
 }
 
-export default function ProductosPage({ params }: Props) {
-  const { locale } = use(params)
+function ProductosContent({ locale }: { locale: string }) {
   const searchParams = useSearchParams()
   const router = useRouter()
 
@@ -433,5 +432,14 @@ export default function ProductosPage({ params }: Props) {
         </div>
       </div>
     </div>
+  )
+}
+
+export default function ProductosPage({ params }: Props) {
+  const { locale } = use(params)
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-[#0A0A0A]" />}>
+      <ProductosContent locale={locale} />
+    </Suspense>
   )
 }
