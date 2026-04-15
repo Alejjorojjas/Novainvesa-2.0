@@ -1,0 +1,57 @@
+name: Deploy Frontend — Vercel
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'Frontend/**'
+      - '.github/workflows/deploy-frontend.yml'
+
+concurrency:
+  group: deploy-frontend-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    name: Build & Deploy to Vercel
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: Frontend/package-lock.json
+
+      - name: Instalar dependencias
+        working-directory: Frontend
+        run: npm ci
+
+      - name: Verificar tipos TypeScript
+        working-directory: Frontend
+        run: npx tsc --noEmit
+
+      - name: Build Next.js
+        working-directory: Frontend
+        run: npm run build
+        env:
+          NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
+          NEXT_PUBLIC_MP_PUBLIC_KEY: ${{ secrets.NEXT_PUBLIC_MP_PUBLIC_KEY }}
+          NEXT_PUBLIC_META_PIXEL_ID: ${{ secrets.NEXT_PUBLIC_META_PIXEL_ID }}
+          NEXT_PUBLIC_GA4_ID: ${{ secrets.NEXT_PUBLIC_GA4_ID }}
+          NEXT_PUBLIC_WHATSAPP_NUMBER: ${{ secrets.NEXT_PUBLIC_WHATSAPP_NUMBER }}
+
+      - name: Instalar Vercel CLI
+        run: npm install -g vercel@latest
+
+      - name: Deploy a Vercel (Producción)
+        working-directory: Frontend
+        run: vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }} --yes
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
