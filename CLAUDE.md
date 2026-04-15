@@ -147,14 +147,39 @@ Ejemplos:
 
 Claude Code invoca agentes automáticamente según la tarea:
 
+### Agentes principales
+
 | Tarea | Agente |
 |-------|--------|
-| Decisión de arquitectura, nuevo módulo, cambio estructural | `arquitecto` |
-| Endpoint, servicio, repositorio Java, query SQL | `backend` |
-| Componente React, página Next.js, estilo, i18n | `frontend` |
-| Probar funcionalidad, buscar bugs, validar flujo | `qa` |
-| GitHub Actions, Dockerfile, deploy, variables de entorno | `devops` |
-| Revisión de seguridad (solo cuando se indique) | `seguridad` |
+| Decisión de arquitectura, nuevo módulo, cambio estructural | `arquitecto-novainvesa` |
+| Endpoint, servicio, repositorio Java, query SQL | `backend-novainvesa` |
+| Componente React, página Next.js, estilo, i18n | `frontend-novainvesa` |
+| Probar funcionalidad, buscar bugs, validar flujo | `qa-novainvesa` |
+| GitHub Actions, Dockerfile, deploy, variables de entorno | `devops-novainvesa` |
+| Revisión de seguridad (solo cuando se indique) | `seguridad-novainvesa` |
+
+### Subagentes especializados
+
+| Tarea | Subagente |
+|-------|-----------|
+| Integración con Dropi API, N8n, importación de productos | `dropi-integration` |
+| Wompi, MercadoPago, verificación de webhooks HMAC | `payments-integration` |
+| Emails SMTP, WhatsApp via Chatea Pro | `notifications` |
+| Importador de productos Dropi (UI admin + backend) | `product-importer` |
+| generateMetadata, sitemap, robots.txt, JSON-LD | `seo-metadata` |
+
+### Skills disponibles (contexto automático)
+
+| Skill | Cuándo se aplica |
+|-------|-----------------|
+| `novainvesa-context` | Contexto general del proyecto, URLs, stack, convenciones |
+| `spring-boot-patterns` | Cualquier tarea de backend Java |
+| `nextjs-patterns` | Cualquier tarea de frontend Next.js |
+| `dropi-api` | Integración con Dropi o N8n |
+| `n8n-workflows` | Flujos de automatización N8n |
+| `seguridad-web` | Seguridad, JWT, HMAC, CORS, rate limiting |
+| `deployment` | Deploy, CI/CD, GitHub Actions, DNS |
+| `design-tokens` | Componentes UI, colores, tipografía, Shadcn |
 
 ---
 
