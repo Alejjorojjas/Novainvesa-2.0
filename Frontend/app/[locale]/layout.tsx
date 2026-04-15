@@ -1,10 +1,15 @@
 import type { Metadata } from 'next'
+import { Geist, Geist_Mono } from 'next/font/google'
 import { NextIntlClientProvider } from 'next-intl'
 import { getMessages, setRequestLocale } from 'next-intl/server'
-import { Geist, Geist_Mono } from 'next/font/google'
 import { Toaster } from 'sonner'
-import '../globals.css'
+import { ThemeProvider } from '@/components/providers/ThemeProvider'
+import { Navbar } from '@/components/layout/Navbar'
+import { Footer } from '@/components/layout/Footer'
+import { CartDrawer } from '@/components/layout/CartDrawer'
+import { WhatsAppFloat } from '@/components/common/WhatsAppFloat'
 import { locales, type Locale } from '@/i18n'
+import '../globals.css'
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -66,21 +71,47 @@ export default async function LocaleLayout({ children, params }: Props) {
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col antialiased bg-[#0A0A0A] text-white">
-        <NextIntlClientProvider messages={messages}>
-          {children}
-          <Toaster
-            richColors
-            theme="dark"
-            position="bottom-right"
-            toastOptions={{
-              style: {
-                background: '#18181B',
-                border: '1px solid #27272A',
-                color: '#FAFAFA',
-              },
-            }}
-          />
-        </NextIntlClientProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem={false}
+          disableTransitionOnChange
+        >
+          <NextIntlClientProvider messages={messages} locale={locale}>
+
+            {/* Navbar fijo */}
+            <Navbar locale={locale} />
+
+            {/* Cart Drawer — global */}
+            <CartDrawer locale={locale} />
+
+            {/* Contenido principal */}
+            <main id="main-content" className="flex-1">
+              {children}
+            </main>
+
+            {/* Footer */}
+            <Footer locale={locale} />
+
+            {/* WhatsApp flotante */}
+            <WhatsAppFloat />
+
+            {/* Toasts */}
+            <Toaster
+              richColors
+              theme="dark"
+              position="bottom-right"
+              offset={80}
+              toastOptions={{
+                style: {
+                  background: '#18181B',
+                  border: '1px solid #27272A',
+                  color: '#FAFAFA',
+                },
+              }}
+            />
+          </NextIntlClientProvider>
+        </ThemeProvider>
       </body>
     </html>
   )
