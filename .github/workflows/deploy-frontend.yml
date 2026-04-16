@@ -30,7 +30,7 @@ jobs:
 
       - name: Instalar dependencias
         working-directory: Frontend
-        run: npm ci
+        run: npm install
 
       - name: Verificar tipos TypeScript
         working-directory: Frontend
