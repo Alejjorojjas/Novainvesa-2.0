@@ -14,6 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -39,11 +40,17 @@ public class SecurityConfig {
             .sessionManagement(session ->
                 session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/health", "/api/v1/auth/**",
-                    "/api/v1/products/**", "/api/v1/categories/**",
-                    "/api/v1/coverage/**", "/api/v1/orders/**",
-                    "/api/v1/payments/**", "/api/v1/webhooks/**",
-                    "/api/v1/pixel/**").permitAll()
+                .requestMatchers(
+                    new AntPathRequestMatcher("/api/health"),
+                    new AntPathRequestMatcher("/api/v1/auth/**"),
+                    new AntPathRequestMatcher("/api/v1/products/**"),
+                    new AntPathRequestMatcher("/api/v1/categories/**"),
+                    new AntPathRequestMatcher("/api/v1/coverage/**"),
+                    new AntPathRequestMatcher("/api/v1/orders/**"),
+                    new AntPathRequestMatcher("/api/v1/payments/**"),
+                    new AntPathRequestMatcher("/api/v1/webhooks/**"),
+                    new AntPathRequestMatcher("/api/v1/pixel/**")
+                ).permitAll()
                 .anyRequest().authenticated()
             )
             .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
