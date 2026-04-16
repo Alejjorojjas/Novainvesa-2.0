@@ -13,7 +13,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -49,29 +48,29 @@ public class SecurityConfig {
 
             .authorizeHttpRequests(auth -> auth
                 // Health check: público para Render.com
-                .requestMatchers(new AntPathRequestMatcher("/api/health", HttpMethod.GET.name())).permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/health").permitAll()
                 // Autenticación de usuarios: rutas públicas
-                .requestMatchers(new AntPathRequestMatcher("/api/v1/auth/register", HttpMethod.POST.name())).permitAll()
-                .requestMatchers(new AntPathRequestMatcher("/api/v1/auth/login", HttpMethod.POST.name())).permitAll()
+                .requestMatchers(HttpMethod.POST, "/api/v1/auth/register").permitAll()
+                .requestMatchers(HttpMethod.POST, "/api/v1/auth/login").permitAll()
                 // Admin auth: solo el login es público — el orden importa (va ANTES de la regla general admin)
-                .requestMatchers(new AntPathRequestMatcher("/api/v1/admin/auth/login", HttpMethod.POST.name())).permitAll()
+                .requestMatchers(HttpMethod.POST, "/api/v1/admin/auth/login").permitAll()
                 // Admin: todas las demás rutas requieren rol ADMIN o SUPER_ADMIN
-                .requestMatchers(new AntPathRequestMatcher("/api/v1/admin/**")).hasAnyRole("ADMIN", "SUPER_ADMIN")
+                .requestMatchers("/api/v1/admin/**").hasAnyRole("ADMIN", "SUPER_ADMIN")
                 // Productos: listado, búsqueda y detalle son públicos
-                .requestMatchers(new AntPathRequestMatcher("/api/v1/products/**", HttpMethod.GET.name())).permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/v1/products/**").permitAll()
                 // Categorías: listado público
-                .requestMatchers(new AntPathRequestMatcher("/api/v1/categories/**", HttpMethod.GET.name())).permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/v1/categories/**").permitAll()
                 // Cobertura COD: público
-                .requestMatchers(new AntPathRequestMatcher("/api/v1/coverage/**", HttpMethod.GET.name())).permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/v1/coverage/**").permitAll()
                 // Pedidos: creación pública (guest + autenticado), consulta pública
-                .requestMatchers(new AntPathRequestMatcher("/api/v1/orders", HttpMethod.POST.name())).permitAll()
-                .requestMatchers(new AntPathRequestMatcher("/api/v1/orders/**", HttpMethod.GET.name())).permitAll()
+                .requestMatchers(HttpMethod.POST, "/api/v1/orders").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/v1/orders/**").permitAll()
                 // Pagos: creación pública (el pedido ya valida la existencia)
-                .requestMatchers(new AntPathRequestMatcher("/api/v1/payments/**", HttpMethod.POST.name())).permitAll()
+                .requestMatchers(HttpMethod.POST, "/api/v1/payments/**").permitAll()
                 // Webhooks: llamados por proveedores externos, HMAC verifica la autenticidad
-                .requestMatchers(new AntPathRequestMatcher("/api/v1/webhooks/**", HttpMethod.POST.name())).permitAll()
+                .requestMatchers(HttpMethod.POST, "/api/v1/webhooks/**").permitAll()
                 // Meta Conversions API: publico (llamado desde el browser del cliente)
-                .requestMatchers(new AntPathRequestMatcher("/api/v1/pixel/**", HttpMethod.POST.name())).permitAll()
+                .requestMatchers(HttpMethod.POST, "/api/v1/pixel/**").permitAll()
                 // Todo lo demás requiere autenticación JWT
                 .anyRequest().authenticated()
             )
