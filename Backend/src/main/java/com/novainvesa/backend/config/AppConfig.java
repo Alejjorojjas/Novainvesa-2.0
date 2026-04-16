@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
 /**
  * Configuración general de beans de aplicación.
@@ -14,6 +15,15 @@ import org.springframework.web.client.RestTemplate;
 @Configuration
 @EnableAsync
 public class AppConfig {
+
+    // Registrado explícitamente para garantizar que exista antes de que
+    // WebSecurityConfiguration lo necesite durante su inicialización.
+    // spring.main.allow-bean-definition-overriding=true permite que
+    // WebMvcAutoConfiguration lo sobreescriba después con su versión completa.
+    @Bean
+    public HandlerMappingIntrospector mvcHandlerMappingIntrospector() {
+        return new HandlerMappingIntrospector();
+    }
 
     @Bean
     public RestTemplate restTemplate() {

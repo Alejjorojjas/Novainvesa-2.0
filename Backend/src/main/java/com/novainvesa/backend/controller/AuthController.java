@@ -9,6 +9,7 @@ import com.novainvesa.backend.service.AuthService;
 import com.novainvesa.backend.service.RateLimiterService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,7 +22,6 @@ import org.springframework.web.bind.annotation.RestController;
  * Endpoints públicos:
  *   POST /api/v1/auth/register      — registro de usuario
  *   POST /api/v1/auth/login         — login de usuario
- *   POST /api/v1/admin/auth/login   — login de administrador
  */
 @RestController
 public class AuthController {
@@ -71,26 +71,6 @@ public class AuthController {
         }
 
         AuthResponse authResponse = authService.login(request);
-        return ResponseEntity.ok(ApiResponse.success(authResponse));
-    }
-
-    // ─── Login de administrador ────────────────────────────────────────────
-
-    /**
-     * POST /api/v1/admin/auth/login
-     * Autentica un administrador y devuelve un token JWT firmado con el secreto de admins.
-     * Rate limit: 5 por IP en 15 minutos (reutiliza el bucket de login).
-     */
-    @PostMapping("/api/v1/admin/auth/login")
-    public ResponseEntity<ApiResponse<AuthResponse>> loginAdmin(
-            @Valid @RequestBody LoginRequest request,
-            HttpServletRequest httpRequest) {
-
-        if (!rateLimiterService.allowLogin(getClientIp(httpRequest))) {
-            throw AuthException.rateLimitExceeded();
-        }
-
-        AuthResponse authResponse = authService.loginAdmin(request);
         return ResponseEntity.ok(ApiResponse.success(authResponse));
     }
 
