@@ -27,6 +27,7 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(columnDefinition = "INT UNSIGNED")
     private Long id;
 
     /** ID del producto en Dropi (ej: "1865251") */

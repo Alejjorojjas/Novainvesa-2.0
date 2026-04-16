@@ -17,6 +17,7 @@ public class UserPaymentPreference {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(columnDefinition = "INT UNSIGNED")
     private Long id;
 
     @OneToOne(fetch = FetchType.LAZY, optional = false)

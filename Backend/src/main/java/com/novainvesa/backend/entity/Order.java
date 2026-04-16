@@ -28,6 +28,7 @@ public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(columnDefinition = "INT UNSIGNED")
     private Long id;
 
     /** Formato NOVA-YYYYMMDD-NNNN */

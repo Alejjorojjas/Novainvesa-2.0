@@ -22,6 +22,7 @@ public class ImportJob {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(columnDefinition = "INT UNSIGNED")
     private Long id;
 
     /** UUID único del job de importación */

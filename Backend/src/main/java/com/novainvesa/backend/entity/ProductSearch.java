@@ -19,6 +19,7 @@ public class ProductSearch {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(columnDefinition = "INT UNSIGNED")
     private Long id;
 
     @Column(nullable = false, length = 255)

@@ -16,6 +16,7 @@ public class UserAddress {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(columnDefinition = "INT UNSIGNED")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

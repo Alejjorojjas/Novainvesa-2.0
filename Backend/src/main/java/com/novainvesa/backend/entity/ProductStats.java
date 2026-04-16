@@ -16,7 +16,7 @@ public class ProductStats {
 
     /** La PK es también FK a products */
     @Id
-    @Column(name = "product_id")
+    @Column(name = "product_id", columnDefinition = "INT UNSIGNED")
     private Long productId;
 
     @OneToOne(fetch = FetchType.LAZY)
