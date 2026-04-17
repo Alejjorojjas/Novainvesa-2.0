@@ -50,7 +50,14 @@ jobs:
         run: npm install -g vercel@latest
 
       - name: Deploy a Vercel (Producción)
-        run: vercel deploy --prod --cwd Frontend --token=${{ secrets.VERCEL_TOKEN }} --yes
+        run: |
+          vercel deploy --prod --cwd Frontend --token=${{ secrets.VERCEL_TOKEN }} \
+            --build-env NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }} \
+            --build-env NEXT_PUBLIC_MP_PUBLIC_KEY=${{ secrets.NEXT_PUBLIC_MP_PUBLIC_KEY }} \
+            --build-env NEXT_PUBLIC_META_PIXEL_ID=${{ secrets.NEXT_PUBLIC_META_PIXEL_ID }} \
+            --build-env NEXT_PUBLIC_GA4_ID=${{ secrets.NEXT_PUBLIC_GA4_ID }} \
+            --build-env NEXT_PUBLIC_WHATSAPP_NUMBER=${{ secrets.NEXT_PUBLIC_WHATSAPP_NUMBER }} \
+            --yes
         env:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
