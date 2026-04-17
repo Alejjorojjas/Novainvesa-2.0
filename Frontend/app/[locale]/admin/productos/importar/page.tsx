@@ -91,7 +91,7 @@ export default function ImportarPage() {
     setPreviewing(true)
     setPreview(null)
     try {
-      const data = await adminPost<PreviewProduct>('/api/v1/admin/products/dropi/preview', {
+      const data = await adminPost<PreviewProduct>('/api/v1/admin/products/preview', {
         dropiId: dropiId.trim(),
       })
       setPreview(data)
@@ -116,7 +116,7 @@ export default function ImportarPage() {
     }
     setImporting(true)
     try {
-      await adminPost('/api/v1/admin/products/dropi/import', {
+      await adminPost('/api/v1/admin/products/import', {
         dropiProductId: preview.dropiProductId,
         name: importForm.name,
         price: Number(importForm.price),
@@ -149,7 +149,7 @@ export default function ImportarPage() {
     setBulkLoading(true)
     setBulkProgress(null)
     try {
-      const data = await adminPost<{ jobId: string }>('/api/v1/admin/products/dropi/bulk-import', {
+      const data = await adminPost<{ jobId: string }>('/api/v1/admin/products/import-bulk', {
         items: lines,
       })
       setJobId(data.jobId)
@@ -167,7 +167,7 @@ export default function ImportarPage() {
     const poll = async () => {
       try {
         const data = await adminGet<BulkProgress>(
-          `/api/v1/admin/products/dropi/bulk-import/${jobId}/progress`
+          `/api/v1/admin/products/import-bulk/${jobId}`
         )
         setBulkProgress(data)
         if (data.status === 'COMPLETED' || data.status === 'FAILED') {
