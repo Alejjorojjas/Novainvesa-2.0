@@ -43,6 +43,7 @@ public class SecurityConfig {
                 .requestMatchers(
                     new AntPathRequestMatcher("/api/health"),
                     new AntPathRequestMatcher("/api/v1/auth/**"),
+                    new AntPathRequestMatcher("/api/v1/admin/auth/login"),
                     new AntPathRequestMatcher("/api/v1/products/**"),
                     new AntPathRequestMatcher("/api/v1/categories/**"),
                     new AntPathRequestMatcher("/api/v1/coverage/**"),
