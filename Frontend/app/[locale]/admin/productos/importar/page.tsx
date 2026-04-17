@@ -252,7 +252,7 @@ export default function ImportarPage() {
                 )}
                 <div>
                   <p className="text-neutral-50 font-semibold">{preview.name}</p>
-                  <p className="text-blue-400 font-bold mt-1">{formatCOP(preview.price)}</p>
+                  <p className="text-blue-400 font-bold mt-1">{formatCOP(preview.suggestedPrice)}</p>
                   <p className="text-neutral-500 text-xs mt-1 font-mono">ID: {preview.dropiId}</p>
                 </div>
               </div>
