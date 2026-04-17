@@ -9,11 +9,14 @@ import { AdminLayout } from '@/components/admin/AdminLayout'
 import { getErrorMessage } from '@/lib/api'
 
 interface PreviewProduct {
+  dropiId: string
   name: string
-  price: number
+  suggestedPrice: number
   images: string[]
   description: string
-  dropiProductId: string
+  benefits: string[]
+  inStock: boolean
+  alreadyImported: boolean
 }
 
 interface ImportForm {
@@ -35,9 +38,11 @@ function getAdminToken(): string {
   return localStorage.getItem('nova-admin-token') ?? ''
 }
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://api-novainvesa.onrender.com'
+
 async function adminPost<T>(path: string, body: unknown): Promise<T> {
   const token = getAdminToken()
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL ?? ''}${path}`, {
+  const res = await fetch(`${API_URL}${path}`, {
     method: 'POST',
     headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
     body: JSON.stringify(body),
@@ -49,7 +54,7 @@ async function adminPost<T>(path: string, body: unknown): Promise<T> {
 
 async function adminGet<T>(path: string): Promise<T> {
   const token = getAdminToken()
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL ?? ''}${path}`, {
+  const res = await fetch(`${API_URL}${path}`, {
     headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
   })
   const json = await res.json() as { success: boolean; data: T }
@@ -92,12 +97,12 @@ export default function ImportarPage() {
     setPreview(null)
     try {
       const data = await adminPost<PreviewProduct>('/api/v1/admin/products/preview', {
-        dropiId: dropiId.trim(),
+        input: dropiId.trim(),
       })
       setPreview(data)
       setImportForm({
         name: data.name,
-        price: data.price,
+        price: data.suggestedPrice,
         categorySlug: '',
         description: data.description,
       })
@@ -117,11 +122,14 @@ export default function ImportarPage() {
     setImporting(true)
     try {
       await adminPost('/api/v1/admin/products/import', {
-        dropiProductId: preview.dropiProductId,
+        dropiProductId: preview.dropiId,
         name: importForm.name,
         price: Number(importForm.price),
         categorySlug: importForm.categorySlug,
         description: importForm.description,
+        images: preview.images,
+        benefits: preview.benefits,
+        publishImmediately: true,
       })
       toast.success('Producto importado correctamente')
       setPreview(null)
@@ -245,7 +253,7 @@ export default function ImportarPage() {
                 <div>
                   <p className="text-neutral-50 font-semibold">{preview.name}</p>
                   <p className="text-blue-400 font-bold mt-1">{formatCOP(preview.price)}</p>
-                  <p className="text-neutral-500 text-xs mt-1 font-mono">ID: {preview.dropiProductId}</p>
+                  <p className="text-neutral-500 text-xs mt-1 font-mono">ID: {preview.dropiId}</p>
                 </div>
               </div>
 
